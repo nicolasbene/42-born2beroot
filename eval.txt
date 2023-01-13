@@ -1,0 +1,418 @@
+user add 
+groupadd
+sudo usermod -a -G <group> <user>
+> vim /etc/security/pwquality.conf
+getent group 
+lsblk
+sudoreplay 
+etc/sudoers.d/requirements
+ssh teliet@localhost -p 4244
+
+#####
+Change hostname
+Check current hostname
+$ hostnamectl
+
+Change the hostname
+$ hostnamectl set-hostname new_hostname
+
+Change /etc/hosts file
+$ sudo nano /etc/hosts
+
+Change old_hostname with new_hostname:
+127.0.0.1       localhost
+127.0.0.1       new_hostname
+
+Reboot and check the change
+$ sudo reboot
+
+### virtualisation
+
+> Elle permet d'optimiser donc vos équipements et la maintenance devient plus simple. 
+Un matériel virtuel n’est pas sujet aux défaillances. 
+Les ressources physiques sont mutualisées pour les machines virtuelles et un même serveur peut supporter plusieurs VM. Coté utilisateur, l’interaction avec une VM est la même que pour une machine physique. 
+Cet environnement, appelé "machine virtuelle", est créé par le logiciel de virtualisation en interceptant l'accès à certains composants matériels et certaines fonctionnalités. L'ordinateur physique est alors généralement appelé "hôte", tandis que la machine virtuelle est souvent appelée "invité". La plupart du code invité s'exécute sans modification, directement sur l'ordinateur hôte, et le système d'exploitation invité "pense" qu'il s'exécute sur une machine réelle.
+
+> La taille d'un fichier alloué dynamiquement n'augmente que lorsque l'invité stocke réellement des données sur son disque dur virtuel. Par conséquent, ce fichier est initialement petit. Au fur et à mesure que le lecteur est rempli de données, le fichier atteint la taille spécifiée.
+
+> Lorsqu'une machine virtuelle est démarrée pour la première fois, l'assistant de premier démarrage s'affiche. Cet assistant vous aide à sélectionner un support d'installation. Étant donné que la machine virtuelle est créée vide, elle se comporterait autrement comme un véritable ordinateur sans système d'exploitation installé. Il ne fera rien et affichera un message d'erreur indiquant qu'aucun système d'exploitation amorçable n'a été trouvé.
+
+> Test et reprise après sinistre. Surtout avec l'utilisation d'instantanés, on peut jouer avec un environnement informatique en l'exécutant comme une machine virtuelle. En cas de problème, on peut facilement revenir à un instantané précédent et éviter d'avoir à effectuer des sauvegardes et des restaurations fréquentes.
+
+## Partie obligatoire
+
+### Pourquoi choisir Debian ?
+Il existe de nombreuses raisons de choisir Debian comme système d'exploitation - en tant qu'utilisateur, en tant que développeur et même dans des environnements d'entreprise.
+
+- Debian est stable et fiable : bcp de tests sur plusieurs annees et donc moins de bugs
+- Debian est idéale pour les serveurs : Avec des logiciels stables et des cycles de publication longs, Debian est l’une des nombreuses distros Linux qui peuvent alimenter votre serveur
+
+- Debian gère de nombreuses architectures de PC : Debian fournit des installateurs pour une large gamme d’architecture. Vous pouvez faire fonctionner Debian sur des ordinateurs Intel 32 et 64 bits. La prise en charge est également disponible pour les machines PowerPC 64 bits. Vous voulez faire fonctionner Linux sur ARM ou MIPS ? Debian le fait aussi.
+
+- Debian est la plus grande distribution gérée par la communauté : Le format DEB de Debian, en grande partie grâce au nombre de personnes qui utilisent Ubuntu, est maintenant le format d’application le plus courant dans le monde Linux. 
+
+Debian a plus de packages.
+Une bonne connaissance de Linux est nécessaire pour travailler avec Debian, en particulier pour l’installation de nouveaux logiciels et la personnalisation.
+Mettre à jour Debian d’une version stable à une autre est facile.
+Il a une interface graphique et des applications conviviales pour le desktop.
+
+### Debian / Rocky Linux
+
+Gregory Kurtzer, le fondateur de CentOS qui a matérialisé la résistance en créant Rocky Linux, un fork de CentOS hors des mains de Red Hat et dont l’objectif est de proposer un clone parfait du CentOS initial (donc compatible à 100% et stable).
+
+Rocky 
+Équipe : l’équipe de développeurs derrière Rocky Linux lui ouvre ses premières portes et a été un gage de qualité prudent avant même sa sortie. Cofondateur de CentOS, Gregory Kurtzer sait exactement ce qu’apprécient les utilisateurs de la célèbre distribution et peut en tenir compte pour son successeur. Dès le départ, Rocky Linux a les meilleures cartes en main pour succéder dignement à CentOS ;
+
+Stabilité : CentOS ayant toujours été d’une grande stabilité, c’est aussi la priorité pour Rocky Linux. Au lieu de se reposer sur des mises à jour et correctifs en quantité, l’équipe cherche plutôt à développer un système qui fonctionne de manière lisse et sans mauvaises surprises ;
+
+Compatibilité : Rocky Linux est compatible binaire avec Red Hat Enterprise Linux, ce qui en fait une alternative tout à fait valable. La migration depuis CentOS, AlmaLinux et d’autres distributions est également facilitée grâce à l’outil migrate2rocky. En outre, Rocky Linux gère les images de conteneurs et les offres basées sur le Cloud sans aucun problème ;
+
+Open Source : la compatibilité binaire de Rocky Linux n’est pas son seul point commun avec CentOS. À son tour, il reste aussi une distribution open source, ce qui profite finalement à tous les utilisateurs. Si la nouvelle version de Linux parvient à rassembler une communauté aussi importante et active, tout indique qu’il sera très largement documenté, avec une gestion consciencieuse de la sécurité et des mises à jour régulières et des correctifs dans l’intérêt des utilisateurs. Son prédécesseur était déjà proche des besoins utilisateurs, ces derniers n’en attendent pas moins de Rocky Linux.
+
+
+### Interet de la machine virtuel
+
+Il y a plusieurs intérêts à utiliser une machine virtuelle : Tester un nouveau système d'exploitation sans avoir besoin de partitionner son disque dur. Le test peut ainsi s'effectuer sans risques d'endommager le disque dur de votre machine. Développer un logiciel ou un programme pour un autre système d'exploitation.
+- Moins de serveurs physiques : Le premier bénéfice de la virtualisation tombe sous le sens : puisque plusieurs machines virtuelles peuvent fonctionner sur un unique serveur physique, le nombre de serveurs à acheter et à entretenir va être réduit.
+- Meilleur securite : La virtualisation peut être utilisée pour séparer les différentes tâches d’un serveur physique en autant de machines virtuelles distinctes, qui seront alors isolées les unes des autres, ce qui permettra de cloisonner les services
+
+
+### Qu'est-ce que le partitionnement ?
+
+> Le partitionnement, étape indispensable de l'installation, consiste à diviser l'espace disponible sur les disques durs (chaque subdivision de ceux-ci étant appelée « partition ») en fonction des données à y stocker et de l'usage auquel l'ordinateur est destiné. Cette étape comprend également le choix des systèmes de fichiers à utiliser. Toutes ces décisions auront une influence sur les performances, la sécurité des données et l'administration du serveur
+
+### Qu'est-ce que LVM ?
+
+> LVM, le gestionnaire de volumes logiques, est une autre approche pour extraire les volumes logiques de leurs supports physiques, qui se concentre sur l'augmentation de la flexibilité plutôt que sur l'augmentation de la fiabilité. LVM permet de modifier un volume logique de manière transparente vis-à-vis des applications ; par exemple, il est possible d'ajouter de nouveaux disques, d'y migrer les données et de supprimer les anciens disques, sans démonter le volume.
+
+### Pourquoi utiliser des partitions chiffrées ?
+
+> Pour garantir la confidentialité de vos données, par exemple en cas de perte ou de vol de votre ordinateur ou d'un disque dur, il est possible de crypter les données sur certaines partitions. Cette fonctionnalité peut être ajoutée sous n'importe quel système de fichiers, puisque, comme pour LVM, Linux utilise le Device Mapper pour créer une partition virtuelle basée sur une partition sous-jacente qui stockera les données sous une forme cryptée.
+
+### Qu'est-ce qu'AppArmor ?
+
+> AppArmor est un système de contrôle d'accès obligatoire (MAC) basé sur l'interface LSM (Linux Security Modules) de Linux. En pratique, le noyau interroge AppArmor avant chaque appel système pour savoir si le processus est autorisé à effectuer l'opération donnée. Grâce à ce mécanisme, AppArmor limite les programmes à un ensemble limité de ressources.
+
+> AppArmor applique un ensemble de règles (appelées "profil") à chaque programme. Le profil appliqué par le noyau dépend du chemin d'installation du programme en cours d'exécution. Contrairement à SELinux, les règles appliquées ne dépendent pas de l'utilisateur. Tous les utilisateurs sont confrontés au même ensemble de règles lorsqu'ils exécutent le même programme (mais les autorisations utilisateur traditionnelles s'appliquent toujours et peuvent entraîner des comportements différents !).
+
+> Les profils AppArmor sont stockés dans /etc/apparmor.d/ et ils contiennent une liste de règles de contrôle d'accès sur les ressources que chaque programme peut utiliser. Les profils sont compilés et chargés dans le noyau par la commande apparmor_parser. Chaque profil peut être chargé en mode application ou réclamation. Le premier applique la politique et signale les tentatives de violation, tandis que le second n'applique pas la politique mais enregistre toujours les appels système qui auraient été refusés.
+
+> La prise en charge d'AppArmor est intégrée aux noyaux standard fournis par Debian. L'activation d'AppArmor consiste donc simplement à installer certains packages en les exécutant apt install apparmor apparmor-profiles apparmor-utilsavec les privilèges root.
+
+### Qu'est-ce que le contrôle d'accès obligatoire ?
+
+> En sécurité informatique , le contrôle d'accès obligatoire (MAC) fait référence à un type de contrôle d'accès par lequel le système d'exploitation ou la base de données limite la capacité d'un sujet ou d'un initiateur à accéder ou généralement à effectuer une sorte d'opération sur un objet ou une cible. Dans le cas des systèmes d'exploitation, un sujet est généralement un processus ou un thread ; les objets sont des constructions telles que des fichiers, des répertoires, des ports TCP/UDP, des segments de mémoire partagée, des périphériques IO, etc. Les sujets et les objets ont chacun un ensemble d'attributs de sécurité. Chaque fois qu'un sujet tente d'accéder à un objet, une règle d'autorisation appliquée par le noyau du système d'exploitation examine ces attributs de sécurité et décide si l'accès peut avoir lieu. Toute opération par n'importe quel sujet sur n'importe quel objet est testée par rapport à l'ensemble des règles d'autorisation (aka politique) pour déterminer si l'opération est autorisée
+> 
+
+### Comment vérifier si AppArmor est en cours d'exécution ?
+
+> L' aa-status outil donne un statut de haut niveau d'AppArmor et des applications pour lesquelles il a des profils (en tant que root).
+
+### Qu'est-ce qu'APT ?
+
+> APT est l'abréviation de Advanced Package Tool. Ce qui rend ce programme "avancé", c'est son approche des packages. Il ne se contente pas de les évaluer individuellement, mais il les considère dans leur ensemble et produit la meilleure combinaison possible de packages en fonction de ce qui est disponible et compatible selon les dépendances.
+
+> APT doit recevoir une « liste des sources de paquets (dépôts) » : le fichier /etc/apt/sources.list listera les différents dépôts qui publient les paquets Debian. APT importera alors la liste des paquets publiés par chacune de ces sources.
+
+### Qu'est-ce qui est apte ?
+
+> apt-get est le premier frontal — basé sur la ligne de commande — qui a été développé dans le cadre du projet APT. apt est un deuxième frontal basé sur la ligne de commande fourni par APT qui surmonte certaines erreurs de conception d'apt-get. Le comportement par défaut d'apt a été amélioré pour une utilisation interactive et pour faire ce que la plupart des utilisateurs attendent. Les développeurs APT se réservent le droit de modifier l'interface publique de cet outil pour l'améliorer encore. Au contraire, l'interface publique d'apt-get est bien définie et ne changera pas de manière rétrocompatible. C'est donc l'outil que vous souhaitez utiliser lorsque vous avez besoin de scripter les demandes d'installation de packages.
+
+### Qu'est-ce que l'aptitude ?
+
+Aptitude est un gestionnaire de packages de niveau supérieur qui résume les détails de bas niveau et peut fonctionner à la fois en mode d'interface utilisateur interactive basée sur du texte et même en mode non interactif de ligne de commande.
+
+
+### Qu'est-ce qu'un gestionnaire de paquets ?
+
+> Un gestionnaire de packages conserve une trace des logiciels installés sur votre ordinateur et vous permet d'installer facilement de nouveaux logiciels, de mettre à niveau des logiciels vers des versions plus récentes ou de supprimer des logiciels que vous avez précédemment installés. Comme son nom l'indique, les gestionnaires de packages traitent des packages : des collections de fichiers qui sont regroupés et peuvent être installés et supprimés en tant que groupe.
+
+### Qu'est-ce que SSH ?
+
+> Secure Shell SSH est un protocole de réseau cryptographique pour l'exploitation sécurisée de services réseau sur un réseau non sécurisé. SSH fournit un canal sécurisé sur un réseau non sécurisé en utilisant une architecture client-serveur, en connectant une application cliente SSH à un serveur SSH.
+
+> Le client SSH pilote le processus de configuration de la connexion et utilise la cryptographie à clé publique pour vérifier l'identité du serveur SSH. Après la phase de configuration, le protocole SSH utilise des algorithmes de cryptage et de hachage symétriques puissants pour garantir la confidentialité et l'intégrité des données échangées entre le client et le serveur.
+
+> La figure ci-dessous présente un flux de configuration simplifié d'une connexion shell sécurisée.
+
+### Comment changer le port SSH dans le serveur ?
+
+> Par défaut, le serveur SSH s'exécute toujours sur le port 22. Cependant, il peut arriver qu'il soit exécuté sur un port différent. Tester l'utilisation est une des raisons. L'exécution de plusieurs configurations sur le même hôte en est une autre. Rarement, il peut également être exécuté sans les privilèges root, auquel cas il doit être exécuté sur un port non privilégié (c'est-à-dire, numéro de port >= 1024).
+
+> Le numéro de port peut être configuré en modifiant la directive Port 22 dans /etc/ssh/sshd_config. Il peut également être spécifié à l'aide de l'option -p de sshd. Les programmes client SSH et sftp prennent également en charge l'option -p. Ceci pour une raison simple, il existe un grand nombre de robots sur internet qui scannent les ports 22 de toutes les IP publiques pour trouver un serveur SSH à utiliser, en changeant le port par défaut de votre service SSH, vous vous protégerez d'un grand nombre de robots qui automatisent les scans et les attaques .
+
+### Comment spécifier si root peut se connecter en utilisant ssh?
+
+> vim etc/sshd/sshd_config
+
+> Recherchez PermitRootLogin. Il spécifie si root peut se connecter en utilisant ssh. L'argument doit être oui, mot de passe interdit, commandes uniquement forcées ou non. La valeur par défaut est mot de passe interdit. Si cette option est définie sur non, root n'est pas autorisé à se connecter.
+
+> systemctl restart sshd
+- [x]  *Vous devez configurer votre système d'exploitation avec le **pare-feu UFW** et ne laisser ainsi que le port 4242 ouvert.*
+
+### Qu'est-ce qu'un pare-feu ?
+
+> Un pare-feu est un système de sécurité réseau qui surveille et contrôle le trafic réseau entrant et sortant en fonction de règles de sécurité prédéterminées. Un pare-feu établit généralement une barrière entre un réseau approuvé et un réseau non approuvé, comme Internet.
+
+### Qu'est-ce qu'UFW ?
+
+> Le pare-feu non compliqué est une interface et est particulièrement bien adapté aux pare-feu basés sur l'hôte. UFW fournit un cadre pour gérer netfilter, ainsi qu'une interface de ligne de commande pour manipuler le pare-feu.
+
+### Comment configurer Debian avec UFW?
+
+> Un pare-feu simple peut être facilement installé en tapant cette commande dans le terminal en tant que super utilisateur :
+> apt install ufw`
+> Cependant, le simple fait d'installer le pare-feu ne l'activera pas automatiquement, et aucune règle ne sera définie par défaut.
+
+> Avertissement : Si vous configurez via SSH, vous souhaiterez peut-être autoriser SSH avant d'activer le pare-feu. Si votre connexion est interrompue avant d'avoir autorisé SSH, vous risquez d'être bloqué sur votre système.
+
+> Tout d'abord, le pare-feu doit être activé en tapant :
+> ufw enable
+
+> Deuxièmement, les valeurs par défaut doivent être configurées. Pour les utilisateurs normaux, les valeurs par défaut suivantes conviendront parfaitement.
+
+> ufw default deny incoming
+> ufw default allow outgoing
+
+> L'autorisation des règles est assez simple depuis la ligne de commande, et c'est parfois nécessaire. Par exemple, par défaut, ufw refuse toutes les connexions entrantes, ce qui en fera un problème si vous utilisez SSH. Par conséquent, vous devez créer une règle qui autorise les connexions SSH, en tapant :
+
+> ufw allow ssh
+> Des plages de ports peuvent également être spécifiées, un exemple simple pour tcp serait :
+
+> ufw allow 4242/tcp
+> ufw status numbered
+
+### Comment modifier le nom d'hôte de la machine?
+
+> Les versions de Debian avec systemd installé peuvent utiliser hostnamectl set-hostname mymachine. Cet outil dépend de dbus, assurez-vous donc de l'installer en premier.
+
+> L' attribution de noms aux numéros IP a pour but d'en faciliter la mémorisation. En réalité, une adresse IP identifie une interface réseau associée à un appareil tel qu'une carte réseau. Étant donné que chaque machine peut avoir plusieurs cartes réseau, et plusieurs interfaces sur chaque carte, un seul ordinateur peut avoir plusieurs noms dans le système de noms de domaine.
+
+> Chaque machine est cependant identifiée par un nom principal (ou « canonique »), stocké dans le fichier /etc/hostname et communiqué au noyau Linux par des scripts d'initialisation via la commande hostname. La valeur actuelle est disponible dans un système de fichiers virtuel et vous pouvez l'obtenir avec la commande cat /proc/sys/kernel/hostname.
+
+### Comment mettre en place une politique de mot de passe fort sur Debian ?
+
+> vim /etc/security/pwquality.conf
+
+### Comment changer les mots de passe ?
+
+> Pour modifier un mot de passe au nom d'un utilisateur, connectez-vous d'abord ou "su" au compte "root". Tapez ensuite, passwd user(où utilisateur est le nom d'utilisateur du mot de passe que vous modifiez). Le système vous demandera d'entrer un mot de passe. Les mots de passe ne s'affichent pas à l'écran lorsque vous les saisissez.
+
+> Vous pouvez également modifier votre propre mot de passe en tapant passwd(sans spécifier de nom d'utilisateur). Vous serez invité à entrer votre ancien mot de passe pour vérification, puis un nouveau mot de passe.
+
+
+### Comment installer sudo ?
+
+`apt install sudo`
+
+### C'est quoi sudo ?
+
+> Sudo (parfois considéré comme l'abréviation de Super-user do) est un programme conçu pour permettre aux administrateurs système d'autoriser certains utilisateurs à exécuter certaines commandes en tant que root (ou un autre utilisateur). La philosophie de base est de donner le moins de privilèges possible tout en permettant aux gens de faire leur travail. Sudo est également un moyen efficace d'enregistrer qui a exécuté quelle commande et quand.
+
+
+### Ajouter un utilisateur existant à partir de la ligne de commande
+
+> Pour ajouter un utilisateur existant avec id=username à group=sudo :
+
+`sudo adduser username sudo`
+
+> Alternativement, vous pouvez d'abord obtenir root (par exemple, sudo su -) puis exécuter les mêmes commandes sans prefix=sudo :
+
+
+> Après avoir été ajouté à un nouveau groupe, l'utilisateur doit se déconnecter puis se reconnecter pour que le nouveau groupe prenne effet . Les groupes ne sont attribués aux utilisateurs qu'au moment de la connexion. Une source de confusion la plus courante est que les gens s'ajoutent à un nouveau groupe mais ne se déconnectent pas et ne se reconnectent pas et ont ensuite des problèmes parce que le groupe n'est pas affecté ; assurez-vous de vérifier l'appartenance au groupe.
+
+- [x]  *Un utilisateur avec votre login comme nom d'utilisateur doit appartenir aux groupes user42 et sudo.*
+
+### Comment créer un groupe ?
+
+> La groupaddcommande crée un nouveau compte de groupe en utilisant les valeurs spécifiées sur la ligne de commande plus les valeurs par défaut du système. Le nouveau groupe sera entré dans les fichiers système selon les besoins.
+
+**INFO**
+
+*Lors de la soutenance, vous devrez créer un nouvel utilisateur et l'affecter à un groupe.*
+
+### Comment créer un nouvel utilisateur ?
+
+> useradd- créer un nouvel utilisateur ou mettre à jour les informations d'un nouvel utilisateur par défaut
+
+### Comment configurer le groupe sudo ?
+
+> Le plugin de politique sudoers détermine les privilèges sudo d'un utilisateur. C'est le plugin de politique sudo par défaut. La politique est pilotée par le fichier /etc/sudoers ou éventuellement dans LDAP.
+
+### Qu'est-ce que le visudo ?
+
+> visudo édite le fichier sudoers en toute sécurité. visudo verrouille le fichier sudoers contre plusieurs modifications simultanées, fournit des vérifications de base et vérifie les erreurs d'analyse. Si le fichier sudoers est en cours de modification, vous recevrez un message pour réessayer plus tard.
+
+*Pour mettre en place une configuration forte **pour votre groupe sudo** , vous devez vous conformer aux exigences suivantes :*
+
+- [x]  *L'authentification via sudo doit être limitée à 3 tentatives en cas de mot de passe incorrect.*
+    
+    > passwd_tries
+    > 
+    > - Le nombre d'essais qu'un utilisateur obtient pour entrer son mot de passe avant que sudo enregistre l'échec et quitte. La valeur par défaut est 3.
+- [x]  *Un message personnalisé de votre choix doit être affiché si une erreur due à un mot de passe erroné se produit lors de l'utilisation de sudo.*
+    
+    > badpass_message
+    > 
+    > - Message qui s'affiche si un utilisateur saisit un mot de passe incorrect. La valeur par défaut est Désolé, réessayez. sauf si les insultes sont activées.
+
+- [x]  *Chaque action utilisant sudo doit être archivée, à la fois les entrées et les sorties. Le fichier journal doit être enregistré dans le dossier /var/log/sudo/.*
+    
+    > Lorsque la journalisation des E/S est activée, sudo exécute la commande dans un pseudo-terminal et enregistre toutes les entrées et/ou sorties de l'utilisateur, selon les options activées. Les E/S peuvent être consignées sur la machine locale ou sur un serveur de journalisation distant. Pour les journaux locaux, les E/S sont consignées dans le répertoire spécifié par l'option iolog_dir (/var/log/sudo-io par défaut) à l'aide d'un ID de session unique inclus dans la ligne de journal sudo, préfixé par « TSID= ».
+
+- [x]  *Le mode TTY doit être activé pour des raisons de sécurité.*
+    
+    > obligatoire
+    > 
+    > - S'il est défini, sudo ne s'exécutera que lorsque l'utilisateur est connecté à un vrai tty. Lorsque cet indicateur est défini, sudo ne peut être exécuté qu'à partir d'une session de connexion et non via d'autres moyens tels que cron(8) ou des scripts cgi-bin. Ce drapeau est désactivé par défaut.
+
+Plus d'informations : [Pourquoi voudrais-je exiger un tty pour sudo ? Quel est l'avantage de sécurité de l'exiger?
+
+- [x]  *Pour des raisons de sécurité également, les chemins pouvant être utilisés par sudo doivent être restreints.* Exemple : /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+    
+    > Les versions précédentes n'incluaient pas cette ligne. Si vous aviez un /etc/sudoers modifié localement (la plupart le feraient), puis mis à niveau et conservé votre version modifiée localement, cette ligne requise est maintenant manquante. Il ne remplace plus votre PATH lors de l'utilisation de sudo. Il en résulte très probablement que PATH n'est pas défini correctement et n'inclut pas les répertoires système. Le correctif consiste à fusionner vos modifications locales dans le nouveau fichier de package /etc/sudoers. Ou pour placer vos modifications locales dans le nouvel emplacement /etc/sudoers.d/ en tant que fichier nommé de manière unique, tel que /etc/sudoers.d/local-sudoers.
+
+- [x]  *Enfin, **vous devez créer un script simple appelé monitoring.sh. Il doit être développé en bash** .*
+
+### Qu'est-ce qu'un scénario ?
+
+> Un script shell est une séquence de commandes dont vous avez une utilisation répétée. Cette séquence est généralement exécutée en saisissant le nom du script sur la ligne de commande. Vous pouvez également utiliser des scripts pour automatiser les tâches à l'aide de la fonction cron .
+> 
+
+### Comment créer un script en bash ?
+
+> Pour créer un script shell, ouvrez un nouveau fichier vide dans votre éditeur. Cependant, vous voudrez peut-être choisir un éditeur plus avancé comme vim ou emacs, car ceux-ci peuvent être configurés pour reconnaître la syntaxe shell et Bash et peuvent être d'une grande aide pour éviter les erreurs que les débutants commettent fréquemment, comme oublier les crochets et les points-virgules. .
+
+### Quel shell exécutera le script ?
+
+> Lors de l'exécution d'un script dans un sous-shell, vous devez définir quel shell doit exécuter le script. Le type de shell dans lequel vous avez écrit le script n'est peut-être pas celui par défaut sur votre système, de sorte que les commandes que vous avez saisies peuvent entraîner des erreurs lorsqu'elles sont exécutées par le mauvais shell.
+
+> La première ligne du script détermine le shell à démarrer. Les deux premiers caractères de la première ligne doivent être #!, puis suit le chemin vers le shell qui doit interpréter les commandes qui suivent. Les lignes vides sont également considérées comme des lignes, donc ne commencez pas votre script avec une ligne vide.
+
+> monitoring.sh commencera par la ligne
+
+
+> #!/bin/bash
+> 
+
+> Comme indiqué précédemment, cela implique que l'exécutable Bash se trouve dans /bin.
+> 
+
+> Notez que pour rendre un fichier exécutable, vous devez définir le bit eXecutable, et pour un script shell, le bit Readable doit également être défini :
+
+- [x]  ***Au démarrage du serveur, le script affichera des informations (listées ci-dessous) sur tous les terminaux toutes les 10 minutes (regardez le mur)** . La bannière est facultative. Aucune erreur ne doit être visible.*
+
+### Qu'est-ce qu'un mur ?
+
+> wall affiche un message, ou le contenu d'un fichier, ou sinon son entrée standard, sur les terminaux de tous les utilisateurs actuellement connectés.
+
+*Votre script doit toujours pouvoir afficher les informations suivantes :*
+
+- [x]  *L' **architecture** de votre système d'exploitation et sa **version du noyau** .*
+    
+    `[uname --all](https://linux.die.net/man/1/uname)`
+    
+    ![https://user-images.githubusercontent.com/60623613/142035328-559a05c6-b6d3-46b9-89cf-9d6f5e193507.png](https://user-images.githubusercontent.com/60623613/142035328-559a05c6-b6d3-46b9-89cf-9d6f5e193507.png)
+    
+    Plus d'informations : [Commande Uname sous Linux](https://linuxize.com/post/uname-command-in-linux/)
+    
+-*Le nombre de processeurs physiques.*
+
+    > Cela vous indique combien de processeurs physiques se trouvent sur votre système, mais ne répond pas aux questions sur le nombre de cœurs ou si votre système utilise l'hyper-threading. Notez qu'un identifiant physique particulier peut apparaître plusieurs fois dans le fichier, vous devez donc trier les lignes contenant cette chaîne (par exemple, "identifiant physique : 0") pour vous assurer que chacune n'est comptée qu'une seule fois.
+    > 
+-*Le nombre de processeurs virtuels.*
+    
+    > Si vos processeurs sont multicœurs, vous devez savoir combien de processeurs virtuels vous avez. 
+
+-*La RAM actuellement disponible sur votre serveur et son taux d'utilisation en pourcentage.*
+    
+    > free affiche la quantité totale de mémoire physique et d'échange libre et utilisée dans le système, ainsi que les tampons et les caches utilisés par le noyau. Les informations sont recueillies en parsant /proc/meminfo.
+    > 
+    
+    > --mega Affiche la quantité de mémoire en mégaoctets. Implique --si.
+
+    
+    `free --mega | grep Mem | awk '{printf("Memory Usage: %i/%iMB (%.2f%%)\n", $3, $2, $3/$2*100}'`
+    
+- [x]  *La mémoire actuellement disponible sur votre serveur et son taux d'utilisation en pourcentage.*
+    
+    > df affiche la quantité d'espace disque disponible sur le système de fichiers contenant chaque argument de nom de fichier. Si aucun nom de fichier n'est donné, l'espace disponible sur tous les systèmes de fichiers actuellement montés est affiché.
+    
+- [x]  *Le taux d'utilisation actuel de vos processeurs en pourcentage.*
+    
+    > Le programme supérieur fournit une vue dynamique en temps réel d'un système en cours d'exécution. Il peut afficher des informations récapitulatives sur le système ainsi qu'une liste de processus ou de threads actuellement gérés par le noyau Linux.
+
+- [x]  *La date et l'heure du dernier redémarrage.*
+    
+    
+- [x]  *Si LVM est actif ou non.*
+
+    
+- [x]  *Le nombre de connexions actives.*
+    
+    > ss est utilisé pour vider les statistiques de socket. Il permet d'afficher des informations similaires à netstat. Il peut afficher plus d'informations TCP et d'état que d'autres outils.
+
+    > Imprimer des statistiques récapitulatives. Cette option n'analyse pas les listes de sockets en obtenant un résumé à partir de diverses sources. C'est utile lorsque le nombre de sockets est si énorme que l'analyse de /proc/net/tcp est pénible.
+    
+- [x]  *Le nombre d'utilisateurs utilisant le serveur.*
+
+    
+- [x]  *L'adresse IPv4 de votre serveur et son adresse MAC (Media Access Control).*
+    
+    ### [Réseautage virtuel](https://www.virtualbox.org/manual/ch06.html)
+    
+    > Réseau ponté. Ceci est destiné aux besoins de mise en réseau plus avancés, tels que les simulations de réseau et l'exécution de serveurs dans un invité. Lorsqu'il est activé, Oracle VM VirtualBox se connecte à l'une de vos cartes réseau installées et échange directement les paquets réseau, en contournant la pile réseau de votre système d'exploitation hôte.
+    > 
+    
+    ### Comment trouver l'adresse IPv4 de votre serveur ?
+    
+    > hostname -I
+    > 
+    
+    > Le nom d'hôte est le programme utilisé pour définir ou afficher le nom actuel de l'hôte, du domaine ou du nœud du système. Ces noms sont utilisés par de nombreux programmes réseau pour identifier la machine.
+    > 
+    
+    > -I, --all-ip-addresses
+    > 
+    
+    > Afficher toutes les adresses réseau de l'hôte. Cette option énumère toutes les adresses configurées sur toutes les interfaces réseau. L'interface de bouclage et les adresses lien-local IPv6 sont omises . Contrairement à l'option -i, cette option ne dépend pas de la résolution du nom. Ne faites aucune hypothèse sur l'ordre de la sortie.
+    > 
+    
+    ### Comment trouver l'adresse MAC de votre serveur ?
+    
+    `ip link | grep "ether" | awk '{print($2)}'`
+    
+- [x]  *Le nombre de commandes exécutées avec le programme sudo.*
+
+
+*Voici un exemple de la façon dont le script est censé fonctionner :*
+
+**INFO**
+
+:
+
+*Lors de la soutenance, il vous sera demandé d'expliquer le fonctionnement de ce script. **Vous devrez également l'interrompre sans le modifier** . **Jetez un oeil à cron** .*
+
+### Cron, c'est quoi ?
+
+> cron est responsable de l'exécution des commandes planifiées et récurrentes (tous les jours, toutes les semaines, etc.).
+
+> Par défaut, tous les utilisateurs peuvent planifier l'exécution des tâches. Chaque utilisateur dispose ainsi de sa propre crontab dans laquelle il peut enregistrer des commandes planifiées. Il peut être modifié en l'exécutant crontab -e(son contenu est stocké dans le fichier /var/spool/cron/crontabs/user).
+
+### [Qu'est-ce que crontab ?
+
+> Un fichier crontab contient des instructions au démon cron(8) de la forme générale : "exécuter cette commande à cette heure à cette date". Chaque utilisateur a sa propre crontab et les commandes d'une crontab donnée seront exécutées en tant qu'utilisateur propriétaire de la crontab.
+
+
+#Comment afficher des informations sur tous les terminaux toutes les 10 minutes ?
+> Pour que crontab exécute une tâche toutes les 10 minutes, vous pouvez taper comme suit :
+> */10 * * * * /path/to/script
+
+
+> Le */10 est utilisé conjointement avec les plages. Par exemple, 0-23/2 peut être utilisé dans le champ des heures pour spécifier l'exécution de la commande toutes les deux heures. Les étapes sont également autorisées après un astérisque, donc si vous voulez dire toutes les deux heures, utilisez simplement */2. Dans cet exemple, */10 dans le champ minutes pour spécifier l'exécution de la commande toutes les 10 minutes.
+> 
+
+
+### [Comment interrompre le script sans le modifier ?
+
+> Pour annuler une tâche planifiée par cron, exécutez simplement crontab -e et supprimez la ligne correspondante dans le fichier crontab.
